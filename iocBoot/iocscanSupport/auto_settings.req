@@ -1,0 +1,3 @@
+file scanSupport_settings.req P=$(P)
+file saveData_settings.req P=$(P)
+file caputRecorder_settings.req P=$(P):,N=100
