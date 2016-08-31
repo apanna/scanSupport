@@ -74,7 +74,7 @@ caPutLogShow(2)
 dbl > records.txt
 ############################################################################
 # startup SNL programs to monitor scan
-#seq &scanProgress ("S=$(P):, P=$(P):scanProgress:")
+seq &scanProgress ("S=$(P):, P=$(P):scanProgress:")
 registerCaputRecorderTrapListener("$(P):caputRecorderCommand")
 ############################################################################
 # print the time our boot was finished
