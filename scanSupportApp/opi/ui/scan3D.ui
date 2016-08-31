@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>793</width>
-    <height>289</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>microCT Controller</string>
+   <string>scan3D</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -45,11 +45,16 @@
        <height>231</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+      </font>
+     </property>
      <property name="macro">
       <string notr="true">P=$(W), S=scan1, CONFIG=$(CONFIG)</string>
      </property>
      <property name="filename" stdset="0">
-      <string notr="true">../scan/scan-v2.ui</string>
+      <string notr="true">../scan/scan.ui</string>
      </property>
     </widget>
     <widget class="caInclude" name="cainclude_2">
@@ -65,7 +70,7 @@
       <string notr="true">P=$(W), S=scan2, CONFIG=$(CONFIG)</string>
      </property>
      <property name="filename" stdset="0">
-      <string notr="true">../scan/scan-v2.ui</string>
+      <string notr="true">../scan/scan.ui</string>
      </property>
     </widget>
     <widget class="caInclude" name="cainclude_3">
@@ -81,7 +86,7 @@
       <string notr="true">P=$(W), S=scan3, CONFIG=$(CONFIG)</string>
      </property>
      <property name="filename" stdset="0">
-      <string notr="true">../scan/scan-v2.ui</string>
+      <string notr="true">../scan/scan.ui</string>
      </property>
     </widget>
     <widget class="caLabel" name="calabel">
@@ -95,10 +100,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Yu Mincho Demibold</family>
-       <pointsize>8</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -178,10 +183,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Yu Mincho Demibold</family>
-       <pointsize>8</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
@@ -228,10 +233,10 @@
      </property>
      <property name="font">
       <font>
-       <family>Yu Mincho Demibold</family>
-       <pointsize>8</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <family>Times New Roman</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="frameShape">
