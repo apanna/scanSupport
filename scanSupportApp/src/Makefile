@@ -11,7 +11,6 @@ include $(TOP)/configure/CONFIG
 PROD_IOC = scanSupport
 # scanSupport.dbd will be created and installed
 DBD += scanSupport.dbd
-SRCS += scanProg.st
 
 # scanSupport.dbd will be made up from these files:
 $(PROD_IOC)_DBD += base.dbd
@@ -37,8 +36,16 @@ ifdef CAPUTLOG
 	$(PROD_IOC)_LIBS += caPutLog
 endif
 ifdef SNCSEQ
-	$(PROD_IOC)_DBD += devSequencer.dbd
-	$(PROD_IOC)_LIBS += seqDev seq pv
+	# seq-2-1 and earlier has devSequencer
+	ifeq (seq-2-1, $(findstring seq-2-1, $(SNCSEQ)))
+	else ifeq (seq-2.1, $(findstring seq-2.1, $(SNCSEQ)))
+		$(PROD_IOC)_DBD += devSequencer.dbd
+		$(PROD_IOC)_LIBS += seqDev seq pv
+	# seq-2-2
+	else 
+		$(PROD_IOC)_LIBS += seq pv
+	endif
+	$(PROD_IOC)_SRCS += scanProg.st
 endif
 ifdef CALC
 	$(PROD_IOC)_DBD += calcSupport.dbd
