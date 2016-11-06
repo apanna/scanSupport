@@ -37,7 +37,7 @@ program scanProgress
 #include "seqPVmacros.h"
 
 #define debug_flag scanProgressDebug
-#define UPDATE_DELAY .1				/* time to wait between updates of progress (second) */
+#define UPDATE_DELAY 2.				/* time to wait between updates of progress (second) */
 #define UPDATE_DELAY_LONG 20.		/* update paused PV this often regardless of anything (second) */
 
 #ifndef NULL
@@ -95,8 +95,6 @@ long	predictEnd;		/* predicted epoch of end */
 long	startTime;		/* starting time of scan (seconds),  startTime = time(NULL); */
 long	pauseStart;		/* epoch of the start of a pause */
 long	now;
-long    oneStepTime;    /* time it took to complete one step */
-long    cptCount;
 char	tStr[100];
 char	tStr1[100];
 int		beginPause;		/* flags the start of a pause in duringScanPause */
@@ -219,22 +217,13 @@ ss scanProgress {
 %%			fractionDone = (double)cpt/(double)npts;
 			sprintf(new_msg, "scanDim = %d,  completed = {%d/%d,  %d/%d,  %d/%d,  %d/%d}, fractionDone = %g", scanDim,cpt1,npts1,cpt2,npts2,cpt3,npts3,cpt4,npts4,fractionDone);
 			DEBUG_PRINT(4, new_msg);
-			if(!oneStepTime){
-				if(cpt==1){
-%%					now = time(NULL);
-					oneStepTime=now-startTime;
-				}	
-			}
 			if (fractionDone>1.0) fractionDone = 1.0;/* limit fractionDone to range [0,1] */
 			else if (fractionDone<=0.0) fractionDone = 0.0;	/* no negative fractions */
 			if (fractionDone>0.0) {
 %%				now = time(NULL);
-				if (cpt!=cptCount){
-				predictEnd = now + (npts-cpt)*oneStepTime;}
-%%				remainingSec = predictEnd - now; 
-/*%%				remainingSec = (1.0-fractionDone)/fractionDone * (double)(now-startTime-pauseSec);*/
+%%				remainingSec = (1.0-fractionDone)/fractionDone * (double)(now-startTime-pauseSec);
 				pvPut(remainingSec);
-/*				predictEnd = now + remainingSec;	/* add remaining seconds to now */
+				predictEnd = now + remainingSec;	/* add remaining seconds to now */
 %%				clocks2str(remainingSec,tStr);		/* time remaining */
 				PVPUTSTR(remainingTimeStr,tStr)
 %%				clocks2str(now-startTime,tStr);		/* total execution time on the clock */
@@ -257,7 +246,6 @@ ss scanProgress {
 			}
 			pvPut(fractionDone);
 			PVPUT(percentDone,100.0*fractionDone)
-			cptCount=cpt;
 		} state duringScan
 	}
 
@@ -304,8 +292,7 @@ ss scanProgress {
 
 
 	state scanFinish {								/* the scan is running, regularly update the progress */
-		when (1) {	
-			oneStepTime =NULL;								/* scan is done, reset and branch back to idle */
+		when (1) {									/* scan is done, reset and branch back to idle */
 %%			now = time(NULL);						/* reset the progress bar PVs to final values */
 			PVPUTSTR(remainingTimeStr,"00:00:00")	/* no more time remaining, it is one */
 %%			clocks2str(now-startTime-pauseSec,tStr);/* total execution time - pause time */
@@ -516,3 +503,4 @@ static int allStopped(void)
 }
 
 }%
+
