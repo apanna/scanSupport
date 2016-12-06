@@ -36,7 +36,7 @@ dbLoadRecords("db/iocAdminSoft.db","IOC=$(P)")
 dbLoadRecords("db/timer.db","P=$(P), N=1")
 dbLoadRecords("db/timeString.db","P=$(P)")
 dbLoadRecords("db/countDownTimer.vdb","P=$(P), N=1")
-dbLoadRecords("db/standardScans.db","P=$(P):,MAXPTS1=2000,MAXPTS2=1000,MAXPTS3=1000,MAXPTS4=10,MAXPTSH=2000")
+dbLoadRecords("db/standardScans.db","P=$(P):,MAXPTS1=2000,MAXPTS2=2000,MAXPTS3=2000,MAXPTS4=2000,MAXPTSH=2000")
 dbLoadRecords("db/scanProgress.db","P=$(P):scanProgress:")
 dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputPoster.db","P=$(P):,N=300")
 dbLoadRecords("$(CAPUTRECORDER)/caputRecorderApp/Db/caputRecorder.db","P=$(P):,N=100")
@@ -76,6 +76,21 @@ dbl > records.txt
 # startup SNL programs to monitor scan
 seq &scanProgress ("S=$(P):, P=$(P):scanProgress:")
 registerCaputRecorderTrapListener("$(P):caputRecorderCommand")
+############################################################################
+# Initialize relevant records
+# always perform relative scan
+dbpf("$(P):scan1.P1AR","1")
+dbpf("$(P):scan2.P1AR","1")
+dbpf("$(P):scan3.P1AR","1")
+dbpf("$(P):scan4.P1AR","1")
+dbpf("$(P):scanH.P1AR","1")
+
+# after scan go to prior position
+dbpf("$(P):scan1.PASM","2")
+dbpf("$(P):scan2.PASM","2")
+dbpf("$(P):scan3.PASM","2")
+dbpf("$(P):scan4.PASM","2")
+dbpf("$(P):scanH.PASM","2")
 ############################################################################
 # print the time our boot was finished
 date
